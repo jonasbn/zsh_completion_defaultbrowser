@@ -1,0 +1,24 @@
+#compdef defaultbrowser
+# Zsh completion for defaultbrowser:
+# defaultbrowser <tab>
+#
+# Github: https://github.com/jonasbn/zsh_completion_defaultbrowser
+# Copyright Jonas B. Nielsen (jonasbn) 2026
+# MIT License
+
+# Parse browser list from defaultbrowser output
+# Removes asterisk markers and leading/trailing whitespace
+_defaultbrowser_parse_browsers() {
+  defaultbrowser 2>/dev/null | sed -e 's/\*//' -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'
+}
+
+_defaultbrowser() {
+    local -a browsers
+    
+    # Get browser list from parser function
+    browsers=(${(f)"$(_defaultbrowser_parse_browsers)"})
+    
+    _describe 'available browsers' browsers
+}
+
+_defaultbrowser "$@"
